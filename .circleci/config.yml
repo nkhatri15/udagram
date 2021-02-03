@@ -9,6 +9,9 @@ jobs:
   print_hello:
     docker:
       - image: circleci/node:13.8.0
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout 
       - run: echo "print hello" # This prints "A first hello" to stdout.    
@@ -27,4 +30,4 @@ workflows:
       - print_hello
       - print_world:
           requires:
-            -print_hello
+            - print_hello
