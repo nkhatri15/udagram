@@ -11,9 +11,9 @@ jobs:
       - run: 
           name: "store the value in file"
           command: | 
-            echo "text to output here" > /tmp/workspace/output.txt
+            echo "text to output here" > ~/output.txt
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: ~/
           paths:
             - output.txt    
 
@@ -25,11 +25,11 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:      
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/
       - run: 
           name: "print output"
           command: | 
-            cat /tmp/workspace/output.txt
+            cat ~/output.txt
         
 workflows:  
   workflow_jobs:
