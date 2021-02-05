@@ -9,13 +9,13 @@ jobs:
     steps:
       - checkout 
       - run: 
-          name: "echo an env var that is part of our project"
+          name: "store the value in file"
           command: | 
             echo "text to output here" > output.txt
       - persist_to_workspace:
-        root: /tmp/workspace
-        paths:
-          - target/output.txt    
+          root: /tmp/workspace
+          paths:
+            - target/output.txt    
 
   print_output_file:
     docker:
@@ -25,10 +25,11 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:      
       - attach_workspace:
-        at: /tmp/workspace
-      - run : "print putput"  
-        command: | 
-          cat output.txt
+          at: /tmp/workspace
+      - run: 
+          name: "print output"
+          command: | 
+            cat output.txt
         
 workflows:  
   workflow_jobs: # this is the name of our workflow
