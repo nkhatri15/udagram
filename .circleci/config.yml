@@ -28,7 +28,7 @@ jobs:
         at: /tmp/workspace
       - run : "print putput"  
         command: | 
-        cat output.txt
+          cat output.txt
         
 workflows:  
   workflow_jobs: # this is the name of our workflow
