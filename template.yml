@@ -2,9 +2,10 @@ Resources:
   Ec2Instance:
     Type: 'AWS::EC2::Instance'
     Properties:
+      KeyName: cicd-key
+      ImageId: 'ami-068663a3c619dd892'    
       SecurityGroups:
-      - !Ref InstanceSecurityGroup  
-    ImageId: 'ami-068663a3c619dd892'    
+      - !Ref InstanceSecurityGroup    
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
