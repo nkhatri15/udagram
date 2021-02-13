@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Ensure backend infrastructure exist
           command: |
-            aws cloudformation deploy  --stack-name my-stack --template-file template.yml               
+            aws cloudformation deploy  --stack-name ansible-stack --template-file template.yml               
              
 workflows:
   my_workflow:
