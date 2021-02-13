@@ -1,41 +1,18 @@
 version: 2.1
-jobs:
-  save_hello_world_output:
-    docker:
-      - image: circleci/node:13.8.0
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD
-    steps:
-      - checkout 
-      - run: 
-          name: "store the value in file"
-          command: | 
-            echo "text to output here" > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt    
 
-  print_output_file:
+jobs:
+  create_infrastructure:
     docker:
-      - image: circleci/node:13.8.0
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD
-    steps:      
-      - attach_workspace:
-          at: ~/
-      - run: 
-          name: "print output"
-          command: | 
-            cat ~/output.txt
-        
-workflows:  
-  workflow_jobs:
-    jobs: 
-      - save_hello_world_output 
-      - print_output_file:
-          requires:
-            - save_hello_world_output        
-      
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Ensure backend infrastructure exist
+          command: |
+            aws cloudformation deploy \
+              --template-file template.yml \
+              --stack-name my-stack
+workflows:
+  my_workflow:
+    jobs:
+      - create_infrastructure
