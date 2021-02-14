@@ -9,22 +9,23 @@ commands:
             echo "Destroying now "
 
 jobs:
-  create_infrastructure:
+  build:
     docker:
-      - image: amazon/aws-cli
+      - image: circleci/python:3.7.5
     steps:
       - checkout
       - run:
-          name: Create dummy Stack
+          name: Run commands
           command: |
-            aws cloudformation deploy \
-              --template-file template.yml \
-              --stack-name prod-${CIRCLE_WORKFLOW_ID}
-      - run: return 1
-      - destroy_environment
-        when: on_fail
+              echo "I will exit fail status"
+              exit 1
+      - run:
+          name: Run on fail status
+          command: |
+              echo "I am result of above failed job"
+          when: on_fail
 
 workflows:
   my_workflow:
     jobs:
-      - create_infrastructure
+      - build
