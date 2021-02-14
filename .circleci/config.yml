@@ -12,6 +12,10 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
+      - run:
+          name: Run ansible job
+          command: |
+            ansible-playbook -i inventory.txt test/playbook.yml
   smoke_test:
     docker:
       - image: alpine:latest
