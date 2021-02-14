@@ -15,7 +15,7 @@ jobs:
       - run:
           name: Run ansible job
           command: |
-            ansible-playbook -i inventory.txt test/playbook.yml
+            ansible-playbook -i ~/test/inventory.txt ~/test/playbook.yml
   smoke_test:
     docker:
       - image: alpine:latest
